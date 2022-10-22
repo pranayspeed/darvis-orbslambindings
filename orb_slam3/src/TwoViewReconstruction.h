@@ -31,36 +31,12 @@ namespace orb_slam3
 {
 
     struct MyKeyPoint;
-    struct Point3f;
-    // {
-    //     float pts[3];
-    // };
-    struct VecOfKeypoint;
 
 
-    //struct DVKeyPoint;
-    struct DVKeyPoint : public cv::KeyPoint
-    {
-        //DVKeyPoint() = default;
-    };
-    // struct VecOfKeypoint
-    // {
-    //     Point3f vec[3];
-    // };
-
-    // class BridgeVecOfKeypoint
-    // {
-    //     public: 
-    //     std::vector<cv::KeyPoint> mvKeys1;
-    //     //VecOfKeypoint kps;
-
-    //     BridgeVecOfKeypoint (const VecOfKeypoint & vKeys1); 
-
-    // };
     class TwoViewReconstruction
     {
         typedef std::pair<int,int> Match;
-        //typedef std::vector<cv::KeyPoint> VecOfKeypoint;
+        
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         // Fix the reference frame
@@ -72,16 +48,7 @@ namespace orb_slam3
                           Sophus::SE3f &T21, std::vector<cv::Point3f> &vP3D, std::vector<bool> &vbTriangulated);
 
 
-        // bool Reconstruct_1(
-        //     const std::unique_ptr<BridgeVecOfKeypoint> vKeys1
-        // ) const
-        // {
-        //     return true;
-        // }
-        bool Reconstruct_2(
-            const VecOfKeypoint &vKeys1
-        ) const;
-        bool Reconstruct_3(
+        bool Reconstruct_1(
             const std::vector<orb_slam3::MyKeyPoint> &vKeys1
         ) const;
     private:

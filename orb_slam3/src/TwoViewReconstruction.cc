@@ -33,52 +33,24 @@ using namespace std;
 namespace orb_slam3
 {
 
-    struct VecOfKeypoint //: public std::vector<cv::KeyPoint>
-    {
-    public:
-        std::vector<cv::KeyPoint> vec;
-    };
 
-    // struct DVKeyPoint : public cv::KeyPoint
-    // {
-    //     //DVKeyPoint() = default;
-    // };
-
-    bool TwoViewReconstruction::Reconstruct_3(
+    bool TwoViewReconstruction::Reconstruct_1(
             const std::vector<orb_slam3::MyKeyPoint> &vKeys1
         ) const
         {
-            printf("TwoViewReconstruction::Reconstruct_3 created!!\n %f, %f \n", vKeys1[0].pt.x, vKeys1[0].pt.y);
+            printf("TwoViewReconstruction::Reconstruct_1 created!!\n");
+            for(int i =0;i < vKeys1.size(); i++)
+                printf("%f, %f \n", vKeys1[i].pt.x, vKeys1[i].pt.y);
+
 
             //cout << vKeys1[0].pt;
             return true;
         }
 
-    bool TwoViewReconstruction::Reconstruct_2(
-            const VecOfKeypoint &vKeys1
-        ) const
-        {
-            printf("TwoViewReconstruction::Reconstruct_2 created!!\n %f, %f \n", vKeys1.vec.at(0).pt.x, vKeys1.vec.at(0).pt.y);
-            
-            return true;
-        }
 
-    // BridgeVecOfKeypoint::BridgeVecOfKeypoint (const VecOfKeypoint & vKeys1) 
-    // {
-    //     //mvKeys1 = std::vector<cv::KeyPoint>();
-    //     //kps = vKeys1;
-    //     printf("BridgeVecOfKeypoint created!!\n %f, %f", vKeys1[0].pt.x, vKeys1[0].pt.y);
-
-    //     mvKeys1 = std::vector<cv::KeyPoint>();
-        
-    // } 
 
     void test() {}
 
-    // std::unique_ptr<BridgeVecOfKeypoint> new_vec_keypoint(const VecOfKeypoint & vKeys1)
-    //     {
-    //         return std::unique_ptr<BridgeVecOfKeypoint>(new BridgeVecOfKeypoint(vKeys1));
-    //     }
 
     std::unique_ptr<TwoViewReconstruction> new_two_view_reconstruction(float fx, float cx, float fy, float cy, float sigma, int iterations) {
         return std::unique_ptr<TwoViewReconstruction>(new TwoViewReconstruction(fx, cx, fy, cy, sigma, iterations));
