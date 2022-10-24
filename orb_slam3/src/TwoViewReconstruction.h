@@ -30,8 +30,12 @@
 namespace orb_slam3
 {
 
-    struct MyKeyPoint;
-
+    struct DVKeyPoint;
+    struct DVPoint3f;
+    struct Pose;
+    struct DVbool;
+    struct VectorOfDVPoint3f;
+    struct VectorOfDVBool;
 
     class TwoViewReconstruction
     {
@@ -49,8 +53,26 @@ namespace orb_slam3
 
 
         bool Reconstruct_1(
-            const std::vector<orb_slam3::MyKeyPoint> &vKeys1
+            const std::vector<orb_slam3::DVKeyPoint> &vKeys1
         ) const;
+
+
+        // bool Reconstruct_2(
+        //     const std::vector<orb_slam3::DVKeyPoint> &vKeys1,
+        //     const std::vector<orb_slam3::DVKeyPoint> &vKeys2,const std::vector<int> &vMatches12,
+        //     orb_slam3::Pose &T21, 
+        //     std::vector<orb_slam3::DVPoint3f> &vP3D, 
+        //     std::vector<orb_slam3::DVbool> &vbTriangulated
+        // )const ;
+
+        bool Reconstruct_2(
+            const std::vector<orb_slam3::DVKeyPoint> &vKeys1,
+            const std::vector<orb_slam3::DVKeyPoint> &vKeys2,const std::vector<int> &vMatches12,
+            orb_slam3::Pose &T21, 
+            VectorOfDVPoint3f &vP3D, 
+            VectorOfDVBool &vbTriangulated
+        )const ;
+
     private:
 
         void FindHomography(std::vector<bool> &vbMatchesInliers, float &score, Eigen::Matrix3f &H21);

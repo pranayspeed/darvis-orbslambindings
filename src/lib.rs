@@ -1,24 +1,20 @@
-// use opencv::{
-//     prelude::*, core::*,
-//     types::{VectorOfKeyPoint, VectorOfPoint3f},
-// };
-use cxx::{CxxVector};
 
+use cxx::{CxxVector, SharedPtr};
 
 
 #[cxx::bridge(namespace = "orb_slam3")]
 pub mod ffi {
     // Shared structs with fields visible to both languages.
-
-    pub struct Points2f
+    #[derive(Debug, Clone)]
+    pub struct DVPoints2f
     {
         pub x : f32,
         pub y : f32
     }
-
-    pub struct MyKeyPoint {
+    #[derive(Debug, Clone)]
+    pub struct DVKeyPoint {
         /// coordinates of the keypoints
-        pub pt: Points2f,
+        pub pt: DVPoints2f,
         /// diameter of the meaningful keypoint neighborhood
         pub size: f32,
         /// computed orientation of the keypoint (-1 if not applicable);
@@ -32,15 +28,32 @@ pub mod ffi {
         /// object class (if the keypoints need to be clustered by an object they belong to)
         pub class_id: i32,
     }
-    
+
+    #[derive(Debug, Clone)]
+    pub struct DVPoint3f {
+        pub x : f32,
+        pub y : f32,
+        pub z: f32
+    }
 
     pub struct Pose{
     
         pub pose: [[f64;4];4]
     }
+    #[derive(Debug, Clone)]
+    pub struct DVbool{
+    
+        pub val: bool
+    }
 
-
-
+    pub struct VectorOfDVPoint3f
+    {
+        pub vec: Vec<DVPoint3f>
+    }
+    pub struct VectorOfDVBool
+    {
+        pub vec: Vec<bool>
+    }
 
     unsafe extern "C++" {
         // Opaque types which both languages can pass around
@@ -73,13 +86,32 @@ pub mod ffi {
 
         fn Reconstruct_1(
             self: &TwoViewReconstruction,
-            vKeys1: &CxxVector<MyKeyPoint>,
+            vKeys1: &CxxVector<DVKeyPoint>,
         )-> bool;
         
+        
+        // fn Reconstruct_2(
+        //     self: &TwoViewReconstruction,
+        //     vKeys1: &CxxVector<DVKeyPoint>,
+        //     vKeys2:  &CxxVector<DVKeyPoint>,
+        //     vMatches12: &CxxVector<i32>,
+        //     T21: &mut Pose,
+        //     vP3D: Pin<&mut CxxVector<DVPoint3f>>,
+        //     vbTriangulated: Pin<&mut CxxVector<DVbool>>
+        // )-> bool;
+
+        fn Reconstruct_2(
+            self: &TwoViewReconstruction,
+            vKeys1: &CxxVector<DVKeyPoint>,
+            vKeys2:  &CxxVector<DVKeyPoint>,
+            vMatches12: &CxxVector<i32>,
+            T21: &mut Pose,
+            vP3D: &mut VectorOfDVPoint3f,
+            vbTriangulated: &mut VectorOfDVBool
+        )-> bool;
     }
 }
 
 
 
-// bool (orb_slam3::TwoViewReconstruction::*)(const std::vector<orb_slam3::DVKeyPoint>&) const
-// bool (orb_slam3::TwoViewReconstruction::*)(const std::vector<orb_slam3::MyKeyPoint>&) const
+

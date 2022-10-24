@@ -35,7 +35,7 @@ namespace orb_slam3
 
 
     bool TwoViewReconstruction::Reconstruct_1(
-            const std::vector<orb_slam3::MyKeyPoint> &vKeys1
+            const std::vector<orb_slam3::DVKeyPoint> &vKeys1
         ) const
         {
             printf("TwoViewReconstruction::Reconstruct_1 created!!\n");
@@ -47,6 +47,42 @@ namespace orb_slam3
             return true;
         }
 
+    // bool  TwoViewReconstruction::Reconstruct_2(
+    //         const std::vector<orb_slam3::DVKeyPoint> &vKeys1,
+    //         const std::vector<orb_slam3::DVKeyPoint> &vKeys2,
+    //         const std::vector<int> &vMatches12,
+    //         orb_slam3::Pose &T21, 
+    //         std::vector<orb_slam3::DVPoint3f> &vP3D, 
+    //         std::vector<orb_slam3::DVbool> &vbTriangulated
+    //     ) const
+    //     {
+    //         printf("TwoViewReconstruction::Reconstruct_2 created!!\n");
+    //         for(int i =0;i < vKeys1.size(); i++)
+    //             printf("%f, %f \n", vKeys1[i].pt.x, vKeys1[i].pt.y);
+
+
+    //         //cout << vKeys1[0].pt;
+    //         return true;
+    //     }
+        bool TwoViewReconstruction::Reconstruct_2(
+            const std::vector<orb_slam3::DVKeyPoint> &vKeys1,
+            const std::vector<orb_slam3::DVKeyPoint> &vKeys2,
+            const std::vector<int> &vMatches12,
+            orb_slam3::Pose &T21, 
+            VectorOfDVPoint3f &vP3D, 
+            VectorOfDVBool &vbTriangulated
+        ) const 
+        {
+            printf("TwoViewReconstruction::Reconstruct_2 created!!\n");
+            for(int i =0;i < vKeys1.size(); i++)
+                printf("%f, %f \n", vKeys1[i].pt.x, vKeys1[i].pt.y);
+
+            for(int i =0;i < vKeys2.size(); i++)
+                printf("%f, %f \n", vKeys2[i].pt.x, vKeys2[i].pt.y);
+
+            //cout << vKeys1[0].pt;
+            return true;
+        }        
 
 
     void test() {}
